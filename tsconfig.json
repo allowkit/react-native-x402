@@ -1,0 +1,9 @@
+{
+  "files": [],
+  "references": [
+    { "path": "packages/x402-client" },
+    { "path": "packages/policy" },
+    { "path": "packages/agent-wallet" },
+    { "path": "packages/react-native-x402" }
+  ]
+}

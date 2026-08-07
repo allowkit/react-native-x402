@@ -1,0 +1,20 @@
+{
+  "name": "@allowkit/x402-client",
+  "version": "0.0.1",
+  "description": "x402 protocol client for React Native: 402 handshake, payment construction, client-side security hardening. Thin layer over the official @x402/* packages.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "src", "LICENSE"],
+  "scripts": {
+    "typecheck": "tsc --build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/allowkit/react-native-x402.git",
+    "directory": "packages/x402-client"
+  },
+  "keywords": ["x402", "react-native", "payments", "ai-agents", "http-402", "usdc"],
+  "sideEffects": false
+}

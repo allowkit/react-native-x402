@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022", "DOM"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "composite": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@allowkit/x402-client": ["./packages/x402-client/src"],
+      "@allowkit/policy": ["./packages/policy/src"],
+      "@allowkit/agent-wallet": ["./packages/agent-wallet/src"]
+    }
+  }
+}

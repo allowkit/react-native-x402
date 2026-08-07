@@ -1,0 +1,19 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.DS_Store
+.env
+.env.*
+coverage/
+
+# native build artifacts
+native/x402-core-swift/.build/
+native/x402-core-kotlin/build/
+native/x402-core-kotlin/.gradle/
+*.xcworkspace
+Pods/
+
+# Expo / RN
+apps/*/ios/build/
+apps/*/android/build/
+apps/*/.expo/

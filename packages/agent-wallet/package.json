@@ -1,0 +1,22 @@
+{
+  "name": "@allowkit/agent-wallet",
+  "version": "0.0.1",
+  "description": "Self-custodial agent wallet layer: signer interfaces, Nitro-bridged native custody (Secure Enclave / StrongBox), and wallet adapters (CDP, Privy, Turnkey, MWA).",
+  "license": "FSL-1.1-ALv2",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "src", "LICENSE.md"],
+  "scripts": {
+    "typecheck": "tsc --build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/allowkit/react-native-x402.git",
+    "directory": "packages/agent-wallet"
+  },
+  "dependencies": {
+    "@allowkit/x402-client": "0.0.1"
+  },
+  "sideEffects": false
+}

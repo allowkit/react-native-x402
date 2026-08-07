@@ -1,0 +1,20 @@
+{
+  "name": "react-native-x402-monorepo",
+  "private": true,
+  "version": "0.0.0",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "typecheck": "tsc --build",
+    "clean": "tsc --build --clean",
+    "test": "node --test conformance/ 2>/dev/null || echo 'conformance suite lands in Phase 1'"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

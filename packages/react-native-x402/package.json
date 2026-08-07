@@ -1,0 +1,25 @@
+{
+  "name": "react-native-x402",
+  "version": "0.0.1",
+  "description": "x402 payments for React Native AI agents: on-device custody, spending policy, and biometric human-in-the-loop. Batteries included.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "src", "LICENSE"],
+  "scripts": {
+    "typecheck": "tsc --build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/allowkit/react-native-x402.git",
+    "directory": "packages/react-native-x402"
+  },
+  "keywords": ["x402", "react-native", "expo", "ai-agents", "payments", "usdc", "base", "solana", "wallet"],
+  "dependencies": {
+    "@allowkit/x402-client": "0.0.1",
+    "@allowkit/agent-wallet": "0.0.1",
+    "@allowkit/policy": "0.0.1"
+  },
+  "sideEffects": false
+}

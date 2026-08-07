@@ -1,0 +1,22 @@
+{
+  "name": "@allowkit/policy",
+  "version": "0.0.1",
+  "description": "Spending policy for autonomous agents: per-call caps, rolling budgets, allowlists, and human-approval escalation. The single choke point in front of every signer.",
+  "license": "FSL-1.1-ALv2",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "src", "LICENSE.md"],
+  "scripts": {
+    "typecheck": "tsc --build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/allowkit/react-native-x402.git",
+    "directory": "packages/policy"
+  },
+  "dependencies": {
+    "@allowkit/x402-client": "0.0.1"
+  },
+  "sideEffects": false
+}
