@@ -1,11 +1,15 @@
 /**
  * The bridge between the allowkit client (policy choke point, hardening) and
- * the official @x402 packages (protocol encoding, scheme signing) — now for
- * BOTH rails: EVM (EIP-3009) and SVM (partial-signed transaction with the
- * facilitator as fee payer).
+ * the official @x402 packages (protocol encoding, scheme signing), for BOTH
+ * rails: EVM (EIP-3009 typed data) and SVM (partial-signed transaction with
+ * the facilitator as fee payer).
  *
- * This is the reference implementation of the "delegate, don't re-implement"
- * rule — it graduates into @allowkit/agent-wallet once stable.
+ * Import from the subpath: `@allowkit/agent-wallet/bridge`.
+ *
+ * This module embodies the "delegate, don't re-implement" rule: protocol
+ * encoding and scheme signing come from @x402/core, @x402/evm and @x402/svm;
+ * this package adds the PaymentSigner/X402Codec adaptation, signer-level
+ * quote binding, and (soon) native custody via Nitro modules.
  */
 import { x402Client, x402HTTPClient } from '@x402/core/client';
 import { registerExactEvmScheme } from '@x402/evm/exact/client';
@@ -74,7 +78,7 @@ export function createOfficialBridge(config: BridgeConfig): OfficialBridge {
       const pr = http.getPaymentRequiredResponse(
         (name) => response.headers.get(name),
         body
-      ) as WirePaymentRequired;
+      ) as unknown as WirePaymentRequired;
       const accepts: PaymentRequirements[] = pr.accepts
         .filter((a) => a.scheme === 'exact')
         .map((a) => ({

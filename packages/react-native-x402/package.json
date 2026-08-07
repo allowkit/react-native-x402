@@ -1,25 +1,48 @@
 {
   "name": "react-native-x402",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "x402 payments for React Native AI agents: on-device custody, spending policy, and biometric human-in-the-loop. Batteries included.",
   "license": "Apache-2.0",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist", "src", "LICENSE"],
+  "files": [
+    "dist",
+    "src",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "typecheck": "tsc --build"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/allowkit/react-native-x402.git",
+    "url": "git+https://github.com/allowkit/react-native-x402.git",
     "directory": "packages/react-native-x402"
   },
-  "keywords": ["x402", "react-native", "expo", "ai-agents", "payments", "usdc", "base", "solana", "wallet"],
+  "keywords": [
+    "x402",
+    "react-native",
+    "expo",
+    "ai-agents",
+    "payments",
+    "usdc",
+    "base",
+    "solana",
+    "wallet"
+  ],
   "dependencies": {
-    "@allowkit/x402-client": "0.0.1",
-    "@allowkit/agent-wallet": "0.0.1",
-    "@allowkit/policy": "0.0.1"
+    "@allowkit/x402-client": "0.1.0",
+    "@allowkit/agent-wallet": "0.1.0",
+    "@allowkit/policy": "0.1.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "homepage": "https://github.com/allowkit/react-native-x402#readme",
+  "bugs": "https://github.com/allowkit/react-native-x402/issues"
 }

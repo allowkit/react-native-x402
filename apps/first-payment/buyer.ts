@@ -10,7 +10,7 @@
 import { createAgentPayments, usdc } from 'react-native-x402';
 import { LocalPolicyGuard } from '@allowkit/policy';
 import { SOLANA_DEVNET_CAIP2 } from '@x402/svm';
-import { createOfficialBridge } from './bridge.ts';
+import { createOfficialBridge } from '@allowkit/agent-wallet/bridge';
 import { loadOrCreateAccount, loadOrCreateSolanaSigner } from './keys.ts';
 
 const EVM_NETWORK = 'eip155:84532';

@@ -1,22 +1,39 @@
 {
   "name": "@allowkit/agent-wallet",
-  "version": "0.0.1",
-  "description": "Self-custodial agent wallet layer: signer interfaces, Nitro-bridged native custody (Secure Enclave / StrongBox), and wallet adapters (CDP, Privy, Turnkey, MWA).",
+  "version": "0.1.0",
+  "description": "Self-custodial agent wallet layer for x402: multichain signer bridge over the official @x402 packages (EVM + Solana), Nitro-bridged native custody interfaces (Secure Enclave / StrongBox), and wallet adapters.",
   "license": "FSL-1.1-ALv2",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist", "src", "LICENSE.md"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./bridge": {
+      "types": "./dist/bridge.d.ts",
+      "default": "./dist/bridge.js"
+    }
+  },
+  "files": ["dist", "src", "LICENSE.md", "README.md"],
   "scripts": {
     "typecheck": "tsc --build"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/allowkit/react-native-x402.git",
+    "url": "git+https://github.com/allowkit/react-native-x402.git",
     "directory": "packages/agent-wallet"
   },
+  "homepage": "https://github.com/allowkit/react-native-x402#readme",
+  "bugs": "https://github.com/allowkit/react-native-x402/issues",
+  "keywords": ["x402", "react-native", "wallet", "ai-agents", "payments", "usdc", "base", "solana"],
   "dependencies": {
-    "@allowkit/x402-client": "0.0.1"
+    "@allowkit/x402-client": "0.1.0",
+    "@solana/kit": "^5.5.0",
+    "@x402/core": "^2.21.0",
+    "@x402/evm": "^2.21.0",
+    "@x402/svm": "^2.21.0"
   },
   "sideEffects": false
 }
