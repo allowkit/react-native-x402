@@ -2,7 +2,9 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { randomBytes } from 'node:crypto';
 import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts';
+import { createKeyPairSignerFromPrivateKeyBytes, type KeyPairSigner } from '@solana/kit';
 
 const here = dirname(fileURLToPath(import.meta.url));
 
@@ -16,4 +18,18 @@ export function loadOrCreateAccount(name: '.buyer-key' | '.seller-key') {
     writeFileSync(path, pk, { mode: 0o600 });
   }
   return privateKeyToAccount(pk);
+}
+
+export async function loadOrCreateSolanaSigner(
+  name: '.buyer-solana-key' | '.seller-solana-key'
+): Promise<KeyPairSigner> {
+  const path = join(here, name);
+  let seedHex: string;
+  if (existsSync(path)) {
+    seedHex = readFileSync(path, 'utf8').trim();
+  } else {
+    seedHex = randomBytes(32).toString('hex');
+    writeFileSync(path, seedHex, { mode: 0o600 });
+  }
+  return createKeyPairSignerFromPrivateKeyBytes(Uint8Array.from(Buffer.from(seedHex, 'hex')));
 }

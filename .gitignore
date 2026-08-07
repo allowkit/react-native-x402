@@ -21,3 +21,5 @@ apps/*/.expo/
 # example runtime keys (testnet only, never commit)
 .buyer-key
 .seller-key
+.buyer-solana-key
+.seller-solana-key

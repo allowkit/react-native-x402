@@ -1,6 +1,8 @@
 /**
  * The bridge between the allowkit client (policy choke point, hardening) and
- * the official @x402 packages (protocol encoding, scheme signing).
+ * the official @x402 packages (protocol encoding, scheme signing) — now for
+ * BOTH rails: EVM (EIP-3009) and SVM (partial-signed transaction with the
+ * facilitator as fee payer).
  *
  * This is the reference implementation of the "delegate, don't re-implement"
  * rule — it graduates into @allowkit/agent-wallet once stable.
@@ -8,6 +10,8 @@
 import { x402Client, x402HTTPClient } from '@x402/core/client';
 import { registerExactEvmScheme } from '@x402/evm/exact/client';
 import { toClientEvmSigner } from '@x402/evm';
+import { registerExactSvmScheme } from '@x402/svm/exact/client';
+import type { TransactionSigner } from '@solana/kit';
 import type {
   PaymentIntent,
   PaymentRequirements,
@@ -30,18 +34,33 @@ type WirePaymentRequired = { x402Version: number; accepts: WireAccept[] };
 export interface OfficialBridge {
   codec: X402Codec;
   signer: PaymentSigner & { id: string };
-  address: string;
+  addresses: Record<string, string>;
   /** Decode the settlement response (tx hash etc.) from a paid response. */
   getSettlement: (response: Response) => unknown;
 }
 
-// account: a viem LocalAccount (address + signTypedData is all the scheme needs)
-export function createOfficialBridge(
-  account: { address: `0x${string}`; signTypedData: (args: never) => Promise<`0x${string}`> },
-  networks: string[]
-): OfficialBridge {
+export interface BridgeConfig {
+  /** viem LocalAccount — enables eip155:* payments. */
+  evmAccount?: { address: `0x${string}`; signTypedData: (args: never) => Promise<`0x${string}`> };
+  /** @solana/kit TransactionSigner — enables solana:* payments. */
+  svmSigner?: TransactionSigner;
+  /** Networks this bridge should offer to the allowkit selector. */
+  networks: string[];
+}
+
+export function createOfficialBridge(config: BridgeConfig): OfficialBridge {
   const client = new x402Client();
-  registerExactEvmScheme(client, { signer: toClientEvmSigner(account as never) });
+  const addresses: Record<string, string> = {};
+
+  if (config.evmAccount) {
+    registerExactEvmScheme(client, { signer: toClientEvmSigner(config.evmAccount as never) });
+    addresses['eip155'] = config.evmAccount.address;
+  }
+  if (config.svmSigner) {
+    registerExactSvmScheme(client, { signer: config.svmSigner });
+    addresses['solana'] = config.svmSigner.address;
+  }
+
   const http = new x402HTTPClient(client);
 
   const codec: X402Codec = {
@@ -76,9 +95,14 @@ export function createOfficialBridge(
   };
 
   const signer: PaymentSigner & { id: string } = {
-    id: 'viem-local',
-    supportedNetworks: () => networks,
-    payerAddress: async () => account.address,
+    id: 'local-multichain',
+    supportedNetworks: () => config.networks,
+    payerAddress: async (network: string) => {
+      const family = network.split(':')[0] ?? network;
+      const addr = addresses[family];
+      if (!addr) throw new Error(`no signer for network family ${family}`);
+      return addr;
+    },
     async sign(intent: PaymentIntent): Promise<SignedPayment> {
       const pr = intent.rawPaymentRequired as WirePaymentRequired;
       const chosenRaw = (intent.requirements.raw ?? intent.requirements) as unknown as WireAccept;
@@ -107,5 +131,5 @@ export function createOfficialBridge(
     }
   };
 
-  return { codec, signer, address: account.address, getSettlement };
+  return { codec, signer, addresses, getSettlement };
 }
