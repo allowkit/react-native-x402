@@ -1,0 +1,40 @@
+# Release via npm Trusted Publishing (OIDC) — no tokens, no OTP relay.
+#
+# One-time setup (per package, on npmjs.com — package Settings → Trusted
+# Publisher → GitHub Actions):
+#   organization: allowkit   repository: react-native-x402
+#   workflow: release.yml    environment: (leave empty)
+# Do this for: @allowkit/x402-client, @allowkit/policy,
+# @allowkit/agent-wallet, react-native-x402.
+#
+# To release: bump versions, commit, then
+#   git tag v0.2.0 && git push origin v0.2.0
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+  id-token: write # OIDC for npm trusted publishing + provenance
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: 'https://registry.npmjs.org'
+      # trusted publishing requires a recent npm
+      - run: npm install -g npm@latest
+      - run: npm install
+      - run: npm test
+      - name: Publish (dependency order, with provenance)
+        run: |
+          for pkg in packages/x402-client packages/policy packages/agent-wallet packages/react-native-x402; do
+            echo "--- publishing $pkg ---"
+            (cd "$pkg" && npm publish --access public --provenance)
+          done
