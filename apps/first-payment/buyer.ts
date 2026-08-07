@@ -6,7 +6,6 @@
  */
 import { createAgentPayments, usdc } from 'react-native-x402';
 import { LocalPolicyGuard } from '@allowkit/policy';
-import { decodePaymentResponseHeader } from '@x402/core/http';
 import { createOfficialBridge } from './bridge.ts';
 import { loadOrCreateAccount } from './keys.ts';
 
@@ -39,9 +38,9 @@ try {
 
   if (res.ok) {
     console.log('[buyer] body:', await res.json());
-    const settle = decodePaymentResponseHeader((n) => res.headers.get(n));
-    console.log('[buyer] settlement:', JSON.stringify(settle));
-    console.log('\n=== FIRST X402 PAYMENT COMPLETE ===');
+    const settle = bridge.getSettlement(res);
+    if (settle) console.log('[buyer] settlement:', JSON.stringify(settle));
+    console.log('\n=== X402 PAYMENT COMPLETE ===');
   } else {
     console.log('[buyer] body:', await res.text());
     const prHeader = res.headers.get('PAYMENT-REQUIRED');

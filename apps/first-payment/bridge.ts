@@ -31,6 +31,8 @@ export interface OfficialBridge {
   codec: X402Codec;
   signer: PaymentSigner & { id: string };
   address: string;
+  /** Decode the settlement response (tx hash etc.) from a paid response. */
+  getSettlement: (response: Response) => unknown;
 }
 
 // account: a viem LocalAccount (address + signTypedData is all the scheme needs)
@@ -97,5 +99,13 @@ export function createOfficialBridge(
     },
   };
 
-  return { codec, signer, address: account.address };
+  const getSettlement = (response: Response): unknown => {
+    try {
+      return http.getPaymentSettleResponse((name) => response.headers.get(name));
+    } catch {
+      return undefined;
+    }
+  };
+
+  return { codec, signer, address: account.address, getSettlement };
 }
