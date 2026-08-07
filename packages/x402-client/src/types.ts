@@ -26,6 +26,8 @@ export interface PaymentRequirements {
   maxTimeoutSeconds?: number;
   /** Scheme/network-specific extras (e.g. Solana recentBlockhash pinning). */
   extra?: Record<string, unknown>;
+  /** The untouched wire-format accept object, for protocol-delegating signers. */
+  raw?: Record<string, unknown>;
 }
 
 /**
@@ -44,12 +46,14 @@ export interface PaymentIntent {
   facilitator?: string | undefined;
   /** Wall-clock ms when this intent was created (for validity windows). */
   createdAtMs: number;
+  /** Opaque wire-format PaymentRequired object (for protocol-delegating signers). */
+  rawPaymentRequired?: unknown;
 }
 
-/** Result of signing: the payload to send back in the PAYMENT-SIGNATURE header. */
+/** Result of signing: the payload the codec encodes into payment headers. */
 export interface SignedPayment {
-  /** Base64 payload per the scheme's spec. */
-  payload: string;
+  /** Scheme payload — wire shape is codec-defined (official PaymentPayload object or base64 string). */
+  payload: unknown;
   network: NetworkId;
   scheme: 'exact';
 }

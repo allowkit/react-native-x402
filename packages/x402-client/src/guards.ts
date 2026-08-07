@@ -3,7 +3,7 @@
  * literature (arXiv 2605.11781, 2607.19545): bind everything before signing,
  * enforce freshness, never sign the same intent twice.
  */
-import { PaymentIntent, PaymentRequirements, X402Error } from './types';
+import { PaymentIntent, PaymentRequirements, X402Error } from './types.js';
 
 /** Max age of a PaymentIntent before we refuse to sign it. */
 export const INTENT_MAX_AGE_MS = 60_000;

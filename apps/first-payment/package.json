@@ -1,0 +1,22 @@
+{
+  "name": "@allowkit/example-first-payment",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Phase 0 milestone: a real x402 payment on Base Sepolia through the allowkit stack (policy guard + security guards + local viem signer) against the official @x402/express seller middleware.",
+  "type": "module",
+  "scripts": {
+    "seller": "node --experimental-strip-types seller.ts",
+    "buyer": "node --experimental-strip-types buyer.ts"
+  },
+  "dependencies": {
+    "@allowkit/x402-client": "0.0.1",
+    "@allowkit/agent-wallet": "0.0.1",
+    "@allowkit/policy": "0.0.1",
+    "react-native-x402": "0.0.1",
+    "@x402/core": "^2.21.0",
+    "@x402/express": "^2.21.0",
+    "@x402/evm": "^2.21.0",
+    "express": "^4.21.0",
+    "viem": "^2.55.0"
+  }
+}

@@ -10,6 +10,7 @@ import {
   createFetchWithPayment,
   PaymentIntent,
   PolicyGuardLike,
+  X402Codec,
 } from '@allowkit/x402-client';
 import { WalletAdapter } from '@allowkit/agent-wallet';
 import { LocalPolicyGuard, PolicySchema, usdc } from '@allowkit/policy';
@@ -26,6 +27,8 @@ export interface AgentPaymentsConfig {
   onApprovalRequired: (intent: PaymentIntent, reason: string) => Promise<boolean>;
   /** Advanced: replace the built-in guard (e.g. native PolicyGuard in Phase 4). */
   policyGuard?: PolicyGuardLike;
+  /** Advanced: protocol codec — production bridges delegate to @x402/core. */
+  codec?: X402Codec;
 }
 
 export interface AgentPayments {
@@ -41,6 +44,7 @@ export function createAgentPayments(config: AgentPaymentsConfig): AgentPayments 
     signer: config.wallet,
     policy: guard,
     onApprovalRequired: config.onApprovalRequired,
+    ...(config.codec ? { codec: config.codec } : {}),
   });
   return { fetchWithPayment, guard };
 }

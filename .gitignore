@@ -17,3 +17,7 @@ Pods/
 apps/*/ios/build/
 apps/*/android/build/
 apps/*/.expo/
+
+# example runtime keys (testnet only, never commit)
+.buyer-key
+.seller-key

@@ -1,4 +1,4 @@
-export * from './types';
-export * from './guards';
-export { createFetchWithPayment, naiveCodec } from './fetchWithPayment';
-export type { X402Codec, FetchWithPaymentConfig } from './fetchWithPayment';
+export * from './types.js';
+export * from './guards.js';
+export { createFetchWithPayment, naiveCodec } from './fetchWithPayment.js';
+export type { X402Codec, FetchWithPaymentConfig, ParsedPaymentRequired } from './fetchWithPayment.js';
