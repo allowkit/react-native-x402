@@ -22,13 +22,30 @@ import { LocalPolicyGuard } from '@allowkit/policy';
 import { createOfficialBridge } from '@allowkit/agent-wallet/bridge';
 import { nativeSigner } from './src/nativeSigner';
 import { createNativeSolanaSigner } from './src/solanaSigner';
+import { requestApproval, ensureApprovalKey, approvalMode } from './src/approval';
 
-const SELLER = 'http://localhost:4021/api/insight';
+// The simulator reaches the host Mac at localhost; a physical device needs
+// its LAN address (same Wi-Fi). Probe both rather than configure by hand.
+const SELLER_HOSTS = ['localhost', '192.168.4.34'];
 const SOLANA_DEVNET = 'solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1';
+
+async function resolveSellerBase(): Promise<string> {
+  for (const host of SELLER_HOSTS) {
+    const base = `http://${host}:4021`;
+    try {
+      const res = await fetch(`${base}/api/insight`);
+      if (res.status === 402 || res.ok) return base;
+    } catch {
+      // unreachable from this device — try the next candidate
+    }
+  }
+  throw new Error(`seller unreachable (tried ${SELLER_HOSTS.join(', ')})`);
+}
 
 export default function App() {
   const [log, setLog] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
+  const [sellerBase, setSellerBase] = useState<string | null>(null);
   const append = (line: string) => setLog((l) => [...l, line]);
 
   const world = useMemo(() => {
@@ -44,21 +61,48 @@ export default function App() {
       policy: { perTxMax: usdc(0.25), dailyBudget: usdc(5), requireApprovalAbove: usdc(0.1) },
       policyGuard: guard,
       codec: bridge.codec,
-      onApprovalRequired: async (_i, reason) => {
+      onApprovalRequired: async (intent, reason) => {
         setLog((l) => [...l, `ESCALATION: ${reason}`]);
-        // The BiometricGate: OS-level Face ID / passcode. The agent cannot
-        // approve itself — only a fresh human authentication resolves true.
-        const approved = await nativeSigner.authenticate(
-          `Approve this payment? (${reason})`
-        );
-        setLog((l) => [...l, approved ? 'HUMAN APPROVED (biometric)' : 'HUMAN DENIED']);
-        return approved;
+        // The enclave key is biometry-bound: the OS will not produce this
+        // signature without fresh Face ID, so the attestation *is* the proof
+        // of human approval — and it is bound to this exact payment.
+        const result = await requestApproval(intent, reason);
+        if (!result) {
+          setLog((l) => [...l, 'HUMAN DENIED']);
+          return false;
+        }
+        if (result.mode === 'enclave-attestation') {
+          setLog((l) => [
+            ...l,
+            `HUMAN APPROVED — enclave attestation ${result.attestation.signature.slice(0, 16)}…`,
+            `  bound to intent ${result.attestation.intentDigest.slice(0, 16)}…`,
+          ]);
+        } else {
+          setLog((l) => [...l, 'HUMAN APPROVED (OS prompt — weak mode)']);
+        }
+        return true;
       },
     });
     return { svmSigner, bridge, guard, fetchWithPayment };
   }, []);
 
-  const pay = useCallback(async (url: string = SELLER) => {
+  React.useEffect(() => {
+    resolveSellerBase()
+      .then((base) => {
+        setSellerBase(base);
+        append(`seller: ${base}`);
+      })
+      .catch((e) => append(`seller discovery failed: ${(e as Error).message}`));
+    ensureApprovalKey();
+    append(`approval: ${approvalMode()}`);
+  }, []);
+
+  const pay = useCallback(async (path: string = '/api/insight') => {
+    if (!sellerBase) {
+      append('seller not reachable yet');
+      return;
+    }
+    const url = `${sellerBase}${path}`;
     setBusy(true);
     append('requesting paid endpoint…');
     try {
@@ -80,7 +124,7 @@ export default function App() {
       }
       setBusy(false);
     }
-  }, [world]);
+  }, [world, sellerBase]);
 
   return (
     <SafeAreaView style={styles.root}>
@@ -92,13 +136,15 @@ export default function App() {
         <Text style={styles.mono}>{String(nativeSigner.isSecureHardwareAvailable)}</Text>
         <Text style={styles.label}>Wallet (iOS Keychain, ed25519)</Text>
         <Text style={styles.mono}>{world.svmSigner.address}</Text>
+        <Text style={styles.label}>Approval</Text>
+        <Text style={styles.mono}>{approvalMode()}</Text>
         <Text style={styles.label}>Policy</Text>
         <Text style={styles.mono}>$0.25/tx · $5/day · approval &gt; $0.10</Text>
       </View>
-      <Button title={busy ? 'paying…' : 'Pay $0.01 for an insight'} onPress={() => pay()} disabled={busy} />
+      <Button title={busy ? 'paying…' : 'Pay $0.01 for an insight'} onPress={() => pay('/api/insight')} disabled={busy} />
       <Button
         title="Pay $0.15 — deep insight (needs approval)"
-        onPress={() => pay('http://localhost:4021/api/deep-insight')}
+        onPress={() => pay('/api/deep-insight')}
         disabled={busy}
       />
       <ScrollView style={styles.log}>
