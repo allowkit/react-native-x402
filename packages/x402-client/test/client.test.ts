@@ -160,6 +160,45 @@ test('a rejected payment releases the intent; a settled one stays locked', async
   await assert.rejects(() => fetchWithPayment('https://s/retry'), /already-signed/);
 });
 
+
+test('an already-settled intent is refused BEFORE the human is prompted', async () => {
+  const w = fakeWorld();
+  let prompts = 0;
+  const fetchWithPayment = createFetchWithPayment({
+    signer: w.signer,
+    policy: w.policy('escalate'),
+    codec: w.codec,
+    fetchImpl: w.fetchImpl,
+    onApprovalRequired: async () => {
+      prompts++;
+      return true;
+    },
+  });
+  assert.equal((await fetchWithPayment('https://s/once')).status, 200);
+  assert.equal(prompts, 1);
+  // second attempt: replay guard must fire without raising another prompt
+  await assert.rejects(() => fetchWithPayment('https://s/once'), /already-signed/);
+  assert.equal(prompts, 1, 'must not prompt a human for a payment it will refuse');
+});
+
+test('human deliberation time does not expire the quote', async () => {
+  const w = fakeWorld();
+  const fetchWithPayment = createFetchWithPayment({
+    signer: w.signer,
+    policy: w.policy('escalate'),
+    codec: w.codec,
+    fetchImpl: w.fetchImpl,
+    // a human taking longer than INTENT_MAX_AGE_MS to approve
+    onApprovalRequired: async () => {
+      await new Promise((r) => setTimeout(r, 20));
+      return true;
+    },
+  });
+  const res = await fetchWithPayment('https://s/slow-human');
+  assert.equal(res.status, 200);
+  assert.equal(w.signed.length, 1);
+});
+
 test('no signable network among offers → no-acceptable-requirements', async () => {
   const w = fakeWorld({ requirements: [{ ...REQ, network: 'eip155:1' }] });
   const fetchWithPayment = createFetchWithPayment({

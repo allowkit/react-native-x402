@@ -102,6 +102,13 @@ export function createFetchWithPayment(config: FetchWithPaymentConfig) {
       ...(parsed.raw !== undefined ? { rawPaymentRequired: parsed.raw } : {}),
     };
 
+    // ---- fail fast, before troubling a human ----
+    // Replay and freshness are checked BEFORE the policy/approval step: never
+    // raise a biometric prompt for a payment we would refuse anyway, and never
+    // let human deliberation time expire the quote we are about to sign.
+    assertNotReplayed(intent);
+    assertFresh(intent);
+
     // ---- the single choke point ----
     const decision = await config.policy.evaluate(intent);
     if (decision.kind === 'deny') {
@@ -116,9 +123,7 @@ export function createFetchWithPayment(config: FetchWithPaymentConfig) {
       }
     }
 
-    // ---- hardening before signature ----
-    assertFresh(intent);
-    assertNotReplayed(intent);
+    // ---- hardening immediately before signature ----
     assertQuoteBinding(chosen, intent.requirements);
 
     const signed = await config.signer.sign(intent);
