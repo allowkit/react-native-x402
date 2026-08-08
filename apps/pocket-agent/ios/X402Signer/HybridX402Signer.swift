@@ -69,8 +69,20 @@ final class HybridX402Signer: HybridX402SignerSpec {
         try enclave.publicKey(alias: alias)?.hex
     }
 
-    func signEnclaveDigest(alias: String, digestHex: String) throws -> String {
-        try enclave.signDigest(alias: alias, digest: digestHex.hexData).hex
+    func signEnclaveDigest(alias: String, digestHex: String) throws -> Promise<String> {
+        let promise = Promise<String>()
+        // The enclave presents the biometric prompt during signing, which must
+        // NOT run on the JS thread. Hop to a background queue; CryptoKit drives
+        // the Face ID UI on the main thread itself.
+        DispatchQueue.global(qos: .userInitiated).async { [enclave] in
+            do {
+                let sig = try enclave.signDigest(alias: alias, digest: digestHex.hexData).hex
+                promise.resolve(withResult: sig)
+            } catch {
+                promise.reject(withError: error)
+            }
+        }
+        return promise
     }
 
     func deleteEnclaveKey(alias: String) throws {

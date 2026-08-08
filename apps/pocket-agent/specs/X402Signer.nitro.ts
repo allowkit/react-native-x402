@@ -35,6 +35,12 @@ export interface X402Signer
   // --- Secure Enclave P-256 (passkey-style smart-account signing) ---
   generateEnclaveKey(alias: string, requireBiometry: boolean): string;
   enclavePublicKey(alias: string): string | undefined;
-  signEnclaveDigest(alias: string, digestHex: string): string;
+  /**
+   * Sign a 32-byte digest (hex) with the enclave key. On a biometry-bound
+   * key this raises the Face ID / Touch ID prompt, so it MUST be async —
+   * a synchronous JSI call would block the JS thread while the OS tries to
+   * present UI, deadlocking until the watchdog kills the app.
+   */
+  signEnclaveDigest(alias: string, digestHex: string): Promise<string>;
   deleteEnclaveKey(alias: string): void;
 }

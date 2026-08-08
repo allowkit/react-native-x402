@@ -66,7 +66,7 @@ abstract class HybridX402SignerSpec: HybridObject() {
   
   @DoNotStrip
   @Keep
-  abstract fun signEnclaveDigest(alias: String, digestHex: String): String
+  abstract fun signEnclaveDigest(alias: String, digestHex: String): Promise<String>
   
   @DoNotStrip
   @Keep

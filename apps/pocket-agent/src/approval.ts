@@ -90,7 +90,8 @@ export async function requestApproval(
   if (approvalPublicKey) {
     try {
       // Raises the OS biometric prompt: the enclave will not sign without it.
-      const signature = nativeSigner.signEnclaveDigest(APPROVAL_KEY, digest);
+      // Async — the prompt must not block the JS thread.
+      const signature = await nativeSigner.signEnclaveDigest(APPROVAL_KEY, digest);
       return {
         mode: 'enclave-attestation',
         attestation: {

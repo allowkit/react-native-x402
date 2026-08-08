@@ -58,7 +58,7 @@ namespace margelo::nitro::x402signer {
       virtual std::shared_ptr<Promise<bool>> authenticate(const std::string& reason) = 0;
       virtual std::string generateEnclaveKey(const std::string& alias, bool requireBiometry) = 0;
       virtual std::optional<std::string> enclavePublicKey(const std::string& alias) = 0;
-      virtual std::string signEnclaveDigest(const std::string& alias, const std::string& digestHex) = 0;
+      virtual std::shared_ptr<Promise<std::string>> signEnclaveDigest(const std::string& alias, const std::string& digestHex) = 0;
       virtual void deleteEnclaveKey(const std::string& alias) = 0;
 
     protected:

@@ -91,6 +91,8 @@ export default function App() {
       .then((base) => {
         setSellerBase(base);
         append(`seller: ${base}`);
+        // surface this device's wallet address in the host terminal
+        fetch(`${base}/debug/whoami?address=${world.svmSigner.address}`).catch(() => {});
       })
       .catch((e) => append(`seller discovery failed: ${(e as Error).message}`));
     ensureApprovalKey();

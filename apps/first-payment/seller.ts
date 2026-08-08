@@ -63,6 +63,14 @@ app.get('/api/deep-insight', (_req, res) => {
   });
 });
 
+
+// Debug helper: lets a device build report its wallet address to the host
+// terminal (physical phones have no shared console with the Mac).
+app.get('/debug/whoami', (req, res) => {
+  console.log(`[seller] device wallet: ${req.query.address ?? '(none)'}`);
+  res.json({ ok: true });
+});
+
 app.listen(PORT, () => {
   console.log(`[seller] listening on http://localhost:${PORT}`);
   console.log(`[seller] payTo (Base Sepolia):  ${sellerEvm.address}`);

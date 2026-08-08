@@ -132,7 +132,7 @@ namespace margelo::nitro::x402signer {
       auto __value = std::move(__result.value());
       return __value;
     }
-    inline std::string signEnclaveDigest(const std::string& alias, const std::string& digestHex) override {
+    inline std::shared_ptr<Promise<std::string>> signEnclaveDigest(const std::string& alias, const std::string& digestHex) override {
       auto __result = _swiftPart.signEnclaveDigest(alias, digestHex);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());

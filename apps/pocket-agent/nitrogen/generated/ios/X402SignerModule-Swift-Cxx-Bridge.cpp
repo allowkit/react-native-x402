@@ -30,6 +30,14 @@ namespace margelo::nitro::x402signer::bridge::swift {
     };
   }
   
+  // pragma MARK: std::function<void(const std::string& /* result */)>
+  Func_void_std__string create_Func_void_std__string(void* NON_NULL swiftClosureWrapper) noexcept {
+    auto swiftClosure = X402SignerModule::Func_void_std__string::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::string& result) mutable -> void {
+      swiftClosure.call(result);
+    };
+  }
+  
   // pragma MARK: std::shared_ptr<HybridX402SignerSpec>
   std::shared_ptr<HybridX402SignerSpec> create_std__shared_ptr_HybridX402SignerSpec_(void* NON_NULL swiftUnsafePointer) noexcept {
     X402SignerModule::HybridX402SignerSpec_cxx swiftPart = X402SignerModule::HybridX402SignerSpec_cxx::fromUnsafe(swiftUnsafePointer);

@@ -273,7 +273,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = dev.allowkit.pocketagent;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hughchen.pocketagent;
 				PRODUCT_NAME = PocketAgent;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -302,7 +302,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = dev.allowkit.pocketagent;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hughchen.pocketagent;
 				PRODUCT_NAME = PocketAgent;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_VERSION = 5.0;
