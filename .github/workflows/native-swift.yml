@@ -1,0 +1,21 @@
+name: Native (Swift)
+
+on:
+  push:
+    branches: [main]
+    paths: ['native/x402-core-swift/**']
+  pull_request:
+    paths: ['native/x402-core-swift/**']
+
+permissions:
+  contents: read
+
+jobs:
+  swift:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - run: swift build --package-path native/x402-core-swift
+      # Secure Enclave tests self-skip on CI VMs (no enclave); Keychain,
+      # Ed25519, and secp256k1 recovery tests run everywhere.
+      - run: swift test --package-path native/x402-core-swift
