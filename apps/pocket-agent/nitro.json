@@ -1,0 +1,18 @@
+{
+  "$schema": "https://nitro.margelo.com/nitro.schema.json",
+  "cxxNamespace": ["x402signer"],
+  "ios": {
+    "iosModuleName": "PocketAgent"
+  },
+  "android": {
+    "androidNamespace": ["x402signer"],
+    "androidCxxLibName": "PocketAgent"
+  },
+  "autolinking": {
+    "X402Signer": {
+      "ios": { "language": "swift", "implementationClassName": "HybridX402Signer" },
+      "android": { "language": "kotlin", "implementationClassName": "HybridX402Signer" }
+    }
+  },
+  "ignorePaths": ["node_modules"]
+}
