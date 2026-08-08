@@ -23,6 +23,9 @@ import { createOfficialBridge } from '@allowkit/agent-wallet/bridge';
 import { nativeSigner } from './src/nativeSigner';
 import { createNativeSolanaSigner } from './src/solanaSigner';
 import { requestApproval, ensureApprovalKey, approvalMode } from './src/approval';
+import { loadAgentModel, type ModelHandle, type LoadProgress } from './src/model';
+import { runAgent, type AgentEvent } from './src/agent';
+import { TextInput } from 'react-native';
 
 // The simulator reaches the host Mac at localhost; a physical device needs
 // its LAN address (same Wi-Fi). Probe both rather than configure by hand.
@@ -128,6 +131,50 @@ export default function App() {
     }
   }, [world, sellerBase]);
 
+  // ---- on-device agent ----
+  const [model, setModel] = useState<ModelHandle | null>(null);
+  const [modelStatus, setModelStatus] = useState('not loaded');
+  const [question, setQuestion] = useState('Get me a fresh insight and summarize it.');
+  const [thinking, setThinking] = useState(false);
+
+  const loadModel = useCallback(async () => {
+    setModelStatus('starting…');
+    try {
+      const handle = await loadAgentModel((p: LoadProgress) => {
+        if (p.phase === 'downloading') setModelStatus(`downloading ${(p.progress * 100).toFixed(0)}%`);
+        else if (p.phase === 'loading') setModelStatus('loading into memory…');
+        else if (p.phase === 'ready') setModelStatus('ready');
+        else setModelStatus(`error: ${p.message}`);
+      });
+      setModel(handle);
+    } catch (e) {
+      setModelStatus(`error: ${(e as Error).message}`);
+    }
+  }, []);
+
+  const askAgent = useCallback(async () => {
+    if (!model || !sellerBase) {
+      append(model ? 'seller not reachable yet' : 'load the model first');
+      return;
+    }
+    setThinking(true);
+    append(`\n🧑 ${question}`);
+    // The tool the model is given IS the payment stack: policy + native custody.
+    const paidFetch = (url: string) => world.fetchWithPayment(url);
+    try {
+      await runAgent(model.llm, question, paidFetch, (e: AgentEvent) => {
+        if (e.kind === 'tool-call') append(`🤖→💳 model calls paid_fetch(${e.url})`);
+        else if (e.kind === 'tool-result') append(`   ${e.ok ? '✅' : '⛔'} ${e.summary}`);
+        else if (e.kind === 'answer') append(`🤖 ${e.text}`);
+        else if (e.kind === 'thinking') { /* keep the log clean */ }
+      }, { allowedHosts: [new URL(sellerBase).host] });
+    } catch (e) {
+      append(`agent error: ${(e as Error).message}`);
+    } finally {
+      setThinking(false);
+    }
+  }, [model, sellerBase, question, world]);
+
   return (
     <SafeAreaView style={styles.root}>
       <StatusBar barStyle="dark-content" />
@@ -149,6 +196,30 @@ export default function App() {
         onPress={() => pay('/api/deep-insight')}
         disabled={busy}
       />
+
+      <View style={styles.card}>
+        <Text style={styles.label}>On-device agent (Gemma 4 E2B)</Text>
+        <Text style={styles.mono}>{modelStatus}</Text>
+        {!model ? (
+          <Button title="Load model (~2.6 GB, once)" onPress={loadModel} disabled={modelStatus.startsWith('download')} />
+        ) : (
+          <>
+            <TextInput
+              style={styles.input}
+              value={question}
+              onChangeText={setQuestion}
+              placeholder="Ask the agent…"
+              editable={!thinking}
+            />
+            <Button
+              title={thinking ? 'thinking…' : 'Ask the agent (it decides to pay)'}
+              onPress={askAgent}
+              disabled={thinking}
+            />
+          </>
+        )}
+      </View>
+
       <ScrollView style={styles.log}>
         {log.map((line, i) => (
           <Text key={i} style={styles.logLine}>
@@ -169,4 +240,5 @@ const styles = StyleSheet.create({
   mono: { fontFamily: 'Menlo', fontSize: 12 },
   log: { flex: 1, margin: 16 },
   logLine: { fontFamily: 'Menlo', fontSize: 11, marginBottom: 3 },
+  input: { borderWidth: 1, borderColor: '#ccc', borderRadius: 8, padding: 8, marginVertical: 6, fontSize: 13 },
 });

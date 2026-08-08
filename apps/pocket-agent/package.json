@@ -22,6 +22,7 @@
     "react": "19.2.3",
     "react-native": "0.86.2",
     "react-native-get-random-values": "^1.11.0",
+    "react-native-litert-lm": "^0.6.0",
     "react-native-nitro-modules": "^0.36.5",
     "react-native-safe-area-context": "^5.5.2",
     "react-native-x402": "0.1.0"
