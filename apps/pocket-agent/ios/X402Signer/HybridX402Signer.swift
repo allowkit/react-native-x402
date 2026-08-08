@@ -2,6 +2,7 @@
 // X402Core. All byte payloads cross the JSI boundary as hex strings; private
 // keys never do.
 import Foundation
+import LocalAuthentication
 import NitroModules
 
 final class HybridX402Signer: HybridX402SignerSpec {
@@ -10,6 +11,31 @@ final class HybridX402Signer: HybridX402SignerSpec {
 
     var isSecureHardwareAvailable: Bool {
         SecureEnclaveSigner.isAvailable
+    }
+
+    /// Policy-escalation gate: fresh OS-level user authentication.
+    /// Biometrics first, device passcode as fallback — the strongest prompt
+    /// available on the device. Resolves false on cancel/failure.
+    func authenticate(reason: String) throws -> Promise<Bool> {
+        let promise = Promise<Bool>()
+        let context = LAContext()
+        var error: NSError?
+
+        // Fail CLOSED when the device has no usable authentication. Note the
+        // simulator quirk: with neither passcode nor biometrics enrolled it
+        // still reports .deviceOwnerAuthentication as evaluable, then presents
+        // a passcode sheet that can never be satisfied. Require biometrics to
+        // be enrolled OR a passcode to be set before prompting at all.
+        let hasBiometrics = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+        let hasAnyAuth = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
+        guard hasBiometrics || (hasAnyAuth && Self.devicePasscodeIsSet()) else {
+            promise.resolve(withResult: false)
+            return promise
+        }
+        context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, _ in
+            promise.resolve(withResult: success)
+        }
+        return promise
     }
 
     // MARK: software keys
@@ -49,6 +75,29 @@ final class HybridX402Signer: HybridX402SignerSpec {
 
     func deleteEnclaveKey(alias: String) throws {
         try enclave.deleteKey(alias: alias)
+    }
+
+    /// Probe whether a device passcode exists by attempting to add (then
+    /// remove) a Keychain item protected by `.whenPasscodeSetThisDeviceOnly`,
+    /// which fails outright when no passcode is configured.
+    private static func devicePasscodeIsSet() -> Bool {
+        let probeKey = "dev.allowkit.x402core.passcode-probe"
+        guard
+            let access = SecAccessControlCreateWithFlags(
+                nil, kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly, [], nil
+            )
+        else { return false }
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: probeKey,
+            kSecAttrAccount as String: probeKey,
+            kSecValueData as String: Data([0x01]),
+            kSecAttrAccessControl as String: access,
+        ]
+        SecItemDelete(query as CFDictionary)
+        let status = SecItemAdd(query as CFDictionary, nil)
+        SecItemDelete(query as CFDictionary)
+        return status == errSecSuccess
     }
 
     private func parseCurve(_ s: String) throws -> SoftKeyCurve {

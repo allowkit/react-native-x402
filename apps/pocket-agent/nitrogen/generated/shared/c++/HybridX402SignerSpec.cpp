@@ -20,6 +20,7 @@ namespace margelo::nitro::x402signer {
       prototype.registerHybridMethod("signSoftDigest", &HybridX402SignerSpec::signSoftDigest);
       prototype.registerHybridMethod("signSoftMessage", &HybridX402SignerSpec::signSoftMessage);
       prototype.registerHybridMethod("deleteSoftKey", &HybridX402SignerSpec::deleteSoftKey);
+      prototype.registerHybridMethod("authenticate", &HybridX402SignerSpec::authenticate);
       prototype.registerHybridMethod("generateEnclaveKey", &HybridX402SignerSpec::generateEnclaveKey);
       prototype.registerHybridMethod("enclavePublicKey", &HybridX402SignerSpec::enclavePublicKey);
       prototype.registerHybridMethod("signEnclaveDigest", &HybridX402SignerSpec::signEnclaveDigest);

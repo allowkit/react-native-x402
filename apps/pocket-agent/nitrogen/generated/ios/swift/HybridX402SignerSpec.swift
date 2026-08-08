@@ -18,6 +18,7 @@ public protocol HybridX402SignerSpec_protocol: HybridObject {
   func signSoftDigest(alias: String, digestHex: String) throws -> String
   func signSoftMessage(alias: String, messageHex: String) throws -> String
   func deleteSoftKey(alias: String) throws -> Void
+  func authenticate(reason: String) throws -> Promise<Bool>
   func generateEnclaveKey(alias: String, requireBiometry: Bool) throws -> String
   func enclavePublicKey(alias: String) throws -> String?
   func signEnclaveDigest(alias: String, digestHex: String) throws -> String

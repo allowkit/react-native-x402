@@ -16,6 +16,7 @@ namespace X402SignerModule { class HybridX402SignerSpec_cxx; }
 
 #include <string>
 #include <optional>
+#include <NitroModules/Promise.hpp>
 
 #include "X402SignerModule-Swift-Cxx-Umbrella.hpp"
 
@@ -106,6 +107,14 @@ namespace margelo::nitro::x402signer {
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }
+    }
+    inline std::shared_ptr<Promise<bool>> authenticate(const std::string& reason) override {
+      auto __result = _swiftPart.authenticate(reason);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
     }
     inline std::string generateEnclaveKey(const std::string& alias, bool requireBiometry) override {
       auto __result = _swiftPart.generateEnclaveKey(alias, std::forward<decltype(requireBiometry)>(requireBiometry));

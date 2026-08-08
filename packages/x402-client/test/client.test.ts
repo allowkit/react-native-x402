@@ -132,6 +132,34 @@ test('refuses to sign the same intent twice (replay guard)', async () => {
   );
 });
 
+
+test('a rejected payment releases the intent; a settled one stays locked', async () => {
+  // server rejects the first paid attempt, accepts the second
+  let paidAttempts = 0;
+  const w = fakeWorld();
+  const fetchImpl = (async (_url: string, init?: RequestInit) => {
+    const headers = init?.headers as Record<string, string> | undefined;
+    if (headers?.['X-TEST-PAYMENT']) {
+      paidAttempts++;
+      return new Response('{}', { status: paidAttempts === 1 ? 402 : 200 });
+    }
+    return new Response('{}', { status: 402 });
+  }) as unknown as typeof fetch;
+  const fetchWithPayment = createFetchWithPayment({
+    signer: w.signer,
+    policy: w.policy('allow'),
+    codec: w.codec,
+    fetchImpl,
+  });
+  // attempt 1: signed, submitted, rejected -> intent released
+  assert.equal((await fetchWithPayment('https://s/retry')).status, 402);
+  // attempt 2: allowed to re-sign, settles -> intent locked
+  assert.equal((await fetchWithPayment('https://s/retry')).status, 200);
+  assert.equal(w.signed.length, 2);
+  // attempt 3: settled intent must NOT be re-signable
+  await assert.rejects(() => fetchWithPayment('https://s/retry'), /already-signed/);
+});
+
 test('no signable network among offers → no-acceptable-requirements', async () => {
   const w = fakeWorld({ requirements: [{ ...REQ, network: 'eip155:1' }] });
   const fetchWithPayment = createFetchWithPayment({

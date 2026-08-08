@@ -51,6 +51,16 @@ export function markSigned(intent: PaymentIntent): void {
   signedKeys.add(intentKey(intent));
 }
 
+/**
+ * Release an intent for re-signing after a payment that did NOT settle
+ * (server rejected it — e.g. insufficient funds). Settled intents stay
+ * marked: the replay guard's job is preventing double-payment, not
+ * preventing retry of a failed attempt.
+ */
+export function unmarkSigned(intent: PaymentIntent): void {
+  signedKeys.delete(intentKey(intent));
+}
+
 /** Amount parsing that refuses ambiguity: decimal string of atomic units only. */
 export function parseAtomicAmount(amount: string): bigint {
   if (!/^\d+$/.test(amount)) {

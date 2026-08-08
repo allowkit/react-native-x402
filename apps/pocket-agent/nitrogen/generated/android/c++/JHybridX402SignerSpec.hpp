@@ -59,6 +59,7 @@ namespace margelo::nitro::x402signer {
     std::string signSoftDigest(const std::string& alias, const std::string& digestHex) override;
     std::string signSoftMessage(const std::string& alias, const std::string& messageHex) override;
     void deleteSoftKey(const std::string& alias) override;
+    std::shared_ptr<Promise<bool>> authenticate(const std::string& reason) override;
     std::string generateEnclaveKey(const std::string& alias, bool requireBiometry) override;
     std::optional<std::string> enclavePublicKey(const std::string& alias) override;
     std::string signEnclaveDigest(const std::string& alias, const std::string& digestHex) override;

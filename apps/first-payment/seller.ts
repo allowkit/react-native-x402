@@ -36,6 +36,13 @@ app.use(
         ],
         description: 'One machine-priced insight',
       },
+      'GET /api/deep-insight': {
+        accepts: [
+          { scheme: 'exact', price: '$0.15', network: EVM_NETWORK, payTo: sellerEvm.address },
+          { scheme: 'exact', price: '$0.15', network: SOLANA_DEVNET_CAIP2, payTo: sellerSvm.address },
+        ],
+        description: 'A deep insight — priced above typical agent approval thresholds',
+      },
     },
     server
   )
@@ -44,6 +51,14 @@ app.use(
 app.get('/api/insight', (_req, res) => {
   res.json({
     insight: 'the fee is the product',
+    paidAt: new Date().toISOString(),
+  });
+});
+
+app.get('/api/deep-insight', (_req, res) => {
+  res.json({
+    insight: 'defaults are the deepest moat in software',
+    depth: 'considerable',
     paidAt: new Date().toISOString(),
   });
 });

@@ -45,19 +45,24 @@ export default function App() {
       policyGuard: guard,
       codec: bridge.codec,
       onApprovalRequired: async (_i, reason) => {
-        // Phase 2: BiometricGate sheet. Demo: log and approve.
-        setLog((l) => [...l, `APPROVAL: ${reason} — approved`]);
-        return true;
+        setLog((l) => [...l, `ESCALATION: ${reason}`]);
+        // The BiometricGate: OS-level Face ID / passcode. The agent cannot
+        // approve itself — only a fresh human authentication resolves true.
+        const approved = await nativeSigner.authenticate(
+          `Approve this payment? (${reason})`
+        );
+        setLog((l) => [...l, approved ? 'HUMAN APPROVED (biometric)' : 'HUMAN DENIED']);
+        return approved;
       },
     });
     return { svmSigner, bridge, guard, fetchWithPayment };
   }, []);
 
-  const pay = useCallback(async () => {
+  const pay = useCallback(async (url: string = SELLER) => {
     setBusy(true);
     append('requesting paid endpoint…');
     try {
-      const res = await world.fetchWithPayment(SELLER);
+      const res = await world.fetchWithPayment(url);
       append(`HTTP ${res.status}`);
       if (res.ok) {
         append(`body: ${JSON.stringify(await res.json())}`);
@@ -90,7 +95,12 @@ export default function App() {
         <Text style={styles.label}>Policy</Text>
         <Text style={styles.mono}>$0.25/tx · $5/day · approval &gt; $0.10</Text>
       </View>
-      <Button title={busy ? 'paying…' : 'Pay $0.01 for an insight'} onPress={pay} disabled={busy} />
+      <Button title={busy ? 'paying…' : 'Pay $0.01 for an insight'} onPress={() => pay()} disabled={busy} />
+      <Button
+        title="Pay $0.15 — deep insight (needs approval)"
+        onPress={() => pay('http://localhost:4021/api/deep-insight')}
+        disabled={busy}
+      />
       <ScrollView style={styles.log}>
         {log.map((line, i) => (
           <Text key={i} style={styles.logLine}>

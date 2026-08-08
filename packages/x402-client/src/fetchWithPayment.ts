@@ -16,7 +16,7 @@ import {
   SignedPayment,
   X402Error,
 } from './types.js';
-import { assertFresh, assertNotReplayed, assertQuoteBinding, markSigned } from './guards.js';
+import { assertFresh, assertNotReplayed, assertQuoteBinding, markSigned, unmarkSigned } from './guards.js';
 
 /** What a codec extracts from a 402 response. */
 export interface ParsedPaymentRequired {
@@ -134,6 +134,10 @@ export function createFetchWithPayment(config: FetchWithPaymentConfig) {
 
     if (retry.ok) {
       await config.policy.record(intent);
+    } else {
+      // The payment was rejected (not settled) — release the intent so a
+      // later attempt (e.g. after funding the wallet) can sign again.
+      unmarkSigned(intent);
     }
     return retry;
   };

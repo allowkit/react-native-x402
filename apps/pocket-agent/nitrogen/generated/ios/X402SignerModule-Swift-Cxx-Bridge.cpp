@@ -14,6 +14,22 @@
 
 namespace margelo::nitro::x402signer::bridge::swift {
 
+  // pragma MARK: std::function<void(bool /* result */)>
+  Func_void_bool create_Func_void_bool(void* NON_NULL swiftClosureWrapper) noexcept {
+    auto swiftClosure = X402SignerModule::Func_void_bool::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](bool result) mutable -> void {
+      swiftClosure.call(result);
+    };
+  }
+  
+  // pragma MARK: std::function<void(const std::exception_ptr& /* error */)>
+  Func_void_std__exception_ptr create_Func_void_std__exception_ptr(void* NON_NULL swiftClosureWrapper) noexcept {
+    auto swiftClosure = X402SignerModule::Func_void_std__exception_ptr::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::exception_ptr& error) mutable -> void {
+      swiftClosure.call(error);
+    };
+  }
+  
   // pragma MARK: std::shared_ptr<HybridX402SignerSpec>
   std::shared_ptr<HybridX402SignerSpec> create_std__shared_ptr_HybridX402SignerSpec_(void* NON_NULL swiftUnsafePointer) noexcept {
     X402SignerModule::HybridX402SignerSpec_cxx swiftPart = X402SignerModule::HybridX402SignerSpec_cxx::fromUnsafe(swiftUnsafePointer);

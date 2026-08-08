@@ -17,6 +17,7 @@
 
 #include <string>
 #include <optional>
+#include <NitroModules/Promise.hpp>
 
 namespace margelo::nitro::x402signer {
 
@@ -54,6 +55,7 @@ namespace margelo::nitro::x402signer {
       virtual std::string signSoftDigest(const std::string& alias, const std::string& digestHex) = 0;
       virtual std::string signSoftMessage(const std::string& alias, const std::string& messageHex) = 0;
       virtual void deleteSoftKey(const std::string& alias) = 0;
+      virtual std::shared_ptr<Promise<bool>> authenticate(const std::string& reason) = 0;
       virtual std::string generateEnclaveKey(const std::string& alias, bool requireBiometry) = 0;
       virtual std::optional<std::string> enclavePublicKey(const std::string& alias) = 0;
       virtual std::string signEnclaveDigest(const std::string& alias, const std::string& digestHex) = 0;

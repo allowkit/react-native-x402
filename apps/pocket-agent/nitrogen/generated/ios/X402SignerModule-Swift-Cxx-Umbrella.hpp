@@ -13,6 +13,7 @@ namespace margelo::nitro::x402signer { class HybridX402SignerSpec; }
 
 // Include C++ defined types
 #include "HybridX402SignerSpec.hpp"
+#include <NitroModules/Promise.hpp>
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <memory>

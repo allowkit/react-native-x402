@@ -25,6 +25,13 @@ export interface X402Signer
   signSoftMessage(alias: string, messageHex: string): string;
   deleteSoftKey(alias: string): void;
 
+  /**
+   * Present the OS biometric prompt (Face ID / Touch ID, passcode fallback)
+   * and resolve true only on fresh user authentication. Used by the policy
+   * layer's escalation path (over-threshold payments, unknown payees).
+   */
+  authenticate(reason: string): Promise<boolean>;
+
   // --- Secure Enclave P-256 (passkey-style smart-account signing) ---
   generateEnclaveKey(alias: string, requireBiometry: boolean): string;
   enclavePublicKey(alias: string): string | undefined;
