@@ -1,18 +1,30 @@
 {
   "$schema": "https://nitro.margelo.com/nitro.schema.json",
-  "cxxNamespace": ["x402signer"],
+  "cxxNamespace": [
+    "x402signer"
+  ],
   "ios": {
-    "iosModuleName": "PocketAgent"
+    "iosModuleName": "X402SignerModule"
   },
   "android": {
-    "androidNamespace": ["x402signer"],
-    "androidCxxLibName": "PocketAgent"
+    "androidNamespace": [
+      "x402signer"
+    ],
+    "androidCxxLibName": "X402SignerModule"
   },
   "autolinking": {
     "X402Signer": {
-      "ios": { "language": "swift", "implementationClassName": "HybridX402Signer" },
-      "android": { "language": "kotlin", "implementationClassName": "HybridX402Signer" }
+      "ios": {
+        "language": "swift",
+        "implementationClassName": "HybridX402Signer"
+      },
+      "android": {
+        "language": "kotlin",
+        "implementationClassName": "HybridX402Signer"
+      }
     }
   },
-  "ignorePaths": ["node_modules"]
+  "ignorePaths": [
+    "node_modules"
+  ]
 }

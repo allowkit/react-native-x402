@@ -15,6 +15,7 @@ if linkage != nil
 end
 
 target 'PocketAgent' do
+  pod 'X402SignerModule', :path => '../'
   config = use_native_modules!
 
   use_react_native!(

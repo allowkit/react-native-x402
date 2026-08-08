@@ -25,7 +25,7 @@ target.build_configurations.each do |config|
   config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++20'
   config.build_settings['HEADER_SEARCH_PATHS'] ||= ['$(inherited)']
   hs = Array(config.build_settings['HEADER_SEARCH_PATHS'])
-  hs << "#{app_dir}/nitrogen/generated/shared/c++" << "#{app_dir}/nitrogen/generated/ios"
+  hs << "#{app_dir}/nitrogen/generated/shared/c++" << "#{app_dir}/nitrogen/generated/ios" << "#{__dir__}/Pods/Headers/Private/NitroModules" << "#{__dir__}/Pods/Headers/Public/NitroModules"
   config.build_settings['HEADER_SEARCH_PATHS'] = hs.uniq
 end
 

@@ -7,54 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		07993F97E440010334C5ACD6 /* HybridX402SignerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FADFA90E7BA1DFFF3662C8 /* HybridX402SignerSpec.swift */; };
-		090C7B00709F6890F87AB3F1 /* PocketAgent-Swift-Cxx-Bridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 950CCD309EF1BC92C0317D1D /* PocketAgent-Swift-Cxx-Bridge.cpp */; };
 		0C80B921A6F3F58F76C31292 /* libPods-PocketAgent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-PocketAgent.a */; };
-		0D4990B709DCBB75C3142A88 /* HybridX402SignerSpecSwift.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3029C5468EB3B5D84EEDAB5C /* HybridX402SignerSpecSwift.cpp */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		47410E6F933D0C5267C7C874 /* HybridX402SignerSpec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FC2FC6B3D443B10562DA3A9 /* HybridX402SignerSpec.cpp */; };
-		5F14B59F7161BF74E0D845B7 /* PocketAgentAutolinking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99381A8CFD5CBAF2E69A950E /* PocketAgentAutolinking.swift */; };
-		6027908C90D107F4B193576A /* HybridX402SignerSpec_cxx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F2335A4D4D3E82033B51BD /* HybridX402SignerSpec_cxx.swift */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
-		79B8F04F478FA9A21A808242 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF659E1DDA56C494C22708CF /* KeychainStore.swift */; };
-		7B312794FF5A5BC1DF86161B /* SoftKeySigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0531E8B3D839CEE837D64CF9 /* SoftKeySigner.swift */; };
-		7BCFB713C9E4618EDAB51E75 /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8712FAF4571B0FC63F3D94 /* Support.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		95353B7405DD9B278F312894 /* PocketAgentAutolinking.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9B7869AF57892E9BE94F51FB /* PocketAgentAutolinking.mm */; };
-		BA398D5849A24E54E6302CDC /* SecureEnclaveSigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5375293A95E8D2A9A3755CB5 /* SecureEnclaveSigner.swift */; };
 		D87B6F2DE90986B6B804840E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
-		E253975517F67540E9A23DE8 /* SecureSigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E25AC864D6CEB8D980746E2 /* SecureSigner.swift */; };
-		FD5053B7F759D486666B0C56 /* HybridX402Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29EF0808258F910863A5B00 /* HybridX402Signer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0531E8B3D839CEE837D64CF9 /* SoftKeySigner.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SoftKeySigner.swift; path = "/Users/hugh/x402/react-native-x402/apps/pocket-agent/ios/X402Signer/SoftKeySigner.swift"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* PocketAgent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PocketAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = PocketAgent/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PocketAgent/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = PocketAgent/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		2A8712FAF4571B0FC63F3D94 /* Support.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Support.swift; path = "/Users/hugh/x402/react-native-x402/apps/pocket-agent/ios/X402Signer/Support.swift"; sourceTree = "<group>"; };
-		3029C5468EB3B5D84EEDAB5C /* HybridX402SignerSpecSwift.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = HybridX402SignerSpecSwift.cpp; path = "/Users/hugh/x402/react-native-x402/apps/pocket-agent/nitrogen/generated/ios/c++/HybridX402SignerSpecSwift.cpp"; sourceTree = "<group>"; };
-		35D072DEC388E08F9B8F15F1 /* HybridX402SignerSpec.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = HybridX402SignerSpec.hpp; path = "/Users/hugh/x402/react-native-x402/apps/pocket-agent/nitrogen/generated/shared/c++/HybridX402SignerSpec.hpp"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-PocketAgent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PocketAgent.debug.xcconfig"; path = "Target Support Files/Pods-PocketAgent/Pods-PocketAgent.debug.xcconfig"; sourceTree = "<group>"; };
-		3E25AC864D6CEB8D980746E2 /* SecureSigner.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SecureSigner.swift; path = "/Users/hugh/x402/react-native-x402/apps/pocket-agent/ios/X402Signer/SecureSigner.swift"; sourceTree = "<group>"; };
-		3FC2FC6B3D443B10562DA3A9 /* HybridX402SignerSpec.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = HybridX402SignerSpec.cpp; path = "/Users/hugh/x402/react-native-x402/apps/pocket-agent/nitrogen/generated/shared/c++/HybridX402SignerSpec.cpp"; sourceTree = "<group>"; };
-		5375293A95E8D2A9A3755CB5 /* SecureEnclaveSigner.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SecureEnclaveSigner.swift; path = "/Users/hugh/x402/react-native-x402/apps/pocket-agent/ios/X402Signer/SecureEnclaveSigner.swift"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-PocketAgent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PocketAgent.release.xcconfig"; path = "Target Support Files/Pods-PocketAgent/Pods-PocketAgent.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-PocketAgent.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PocketAgent.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		62F2335A4D4D3E82033B51BD /* HybridX402SignerSpec_cxx.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HybridX402SignerSpec_cxx.swift; path = "/Users/hugh/x402/react-native-x402/apps/pocket-agent/nitrogen/generated/ios/swift/HybridX402SignerSpec_cxx.swift"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = PocketAgent/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = PocketAgent/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		9481F1C1C5A764552266EEE7 /* PocketAgent-Swift-Cxx-Umbrella.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = "PocketAgent-Swift-Cxx-Umbrella.hpp"; path = "/Users/hugh/x402/react-native-x402/apps/pocket-agent/nitrogen/generated/ios/PocketAgent-Swift-Cxx-Umbrella.hpp"; sourceTree = "<group>"; };
-		950CCD309EF1BC92C0317D1D /* PocketAgent-Swift-Cxx-Bridge.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = "PocketAgent-Swift-Cxx-Bridge.cpp"; path = "/Users/hugh/x402/react-native-x402/apps/pocket-agent/nitrogen/generated/ios/PocketAgent-Swift-Cxx-Bridge.cpp"; sourceTree = "<group>"; };
-		99381A8CFD5CBAF2E69A950E /* PocketAgentAutolinking.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PocketAgentAutolinking.swift; path = "/Users/hugh/x402/react-native-x402/apps/pocket-agent/nitrogen/generated/ios/PocketAgentAutolinking.swift"; sourceTree = "<group>"; };
-		9B7869AF57892E9BE94F51FB /* PocketAgentAutolinking.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = PocketAgentAutolinking.mm; path = "/Users/hugh/x402/react-native-x402/apps/pocket-agent/nitrogen/generated/ios/PocketAgentAutolinking.mm"; sourceTree = "<group>"; };
-		9E614ADE77D5E30405901F82 /* HybridX402SignerSpecSwift.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = HybridX402SignerSpecSwift.hpp; path = "/Users/hugh/x402/react-native-x402/apps/pocket-agent/nitrogen/generated/ios/c++/HybridX402SignerSpecSwift.hpp"; sourceTree = "<group>"; };
-		C0BFFD9FF395DC37B8E9F8B6 /* PocketAgent-Swift-Cxx-Bridge.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = "PocketAgent-Swift-Cxx-Bridge.hpp"; path = "/Users/hugh/x402/react-native-x402/apps/pocket-agent/nitrogen/generated/ios/PocketAgent-Swift-Cxx-Bridge.hpp"; sourceTree = "<group>"; };
-		C29EF0808258F910863A5B00 /* HybridX402Signer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HybridX402Signer.swift; path = "/Users/hugh/x402/react-native-x402/apps/pocket-agent/ios/X402Signer/HybridX402Signer.swift"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F9FADFA90E7BA1DFFF3662C8 /* HybridX402SignerSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HybridX402SignerSpec.swift; path = "/Users/hugh/x402/react-native-x402/apps/pocket-agent/nitrogen/generated/ios/swift/HybridX402SignerSpec.swift"; sourceTree = "<group>"; };
-		FF659E1DDA56C494C22708CF /* KeychainStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeychainStore.swift; path = "/Users/hugh/x402/react-native-x402/apps/pocket-agent/ios/X402Signer/KeychainStore.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,8 +75,6 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
-				C487B7EA9A1167960F86B14F /* X402Signer */,
-				ED773C1B16B52819FCA8DE44 /* NitroGenerated */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -129,37 +97,6 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
-		};
-		C487B7EA9A1167960F86B14F /* X402Signer */ = {
-			isa = PBXGroup;
-			children = (
-				0531E8B3D839CEE837D64CF9 /* SoftKeySigner.swift */,
-				5375293A95E8D2A9A3755CB5 /* SecureEnclaveSigner.swift */,
-				FF659E1DDA56C494C22708CF /* KeychainStore.swift */,
-				2A8712FAF4571B0FC63F3D94 /* Support.swift */,
-				3E25AC864D6CEB8D980746E2 /* SecureSigner.swift */,
-				C29EF0808258F910863A5B00 /* HybridX402Signer.swift */,
-			);
-			name = X402Signer;
-			sourceTree = "<absolute>";
-		};
-		ED773C1B16B52819FCA8DE44 /* NitroGenerated */ = {
-			isa = PBXGroup;
-			children = (
-				3FC2FC6B3D443B10562DA3A9 /* HybridX402SignerSpec.cpp */,
-				35D072DEC388E08F9B8F15F1 /* HybridX402SignerSpec.hpp */,
-				62F2335A4D4D3E82033B51BD /* HybridX402SignerSpec_cxx.swift */,
-				F9FADFA90E7BA1DFFF3662C8 /* HybridX402SignerSpec.swift */,
-				99381A8CFD5CBAF2E69A950E /* PocketAgentAutolinking.swift */,
-				9B7869AF57892E9BE94F51FB /* PocketAgentAutolinking.mm */,
-				3029C5468EB3B5D84EEDAB5C /* HybridX402SignerSpecSwift.cpp */,
-				950CCD309EF1BC92C0317D1D /* PocketAgent-Swift-Cxx-Bridge.cpp */,
-				C0BFFD9FF395DC37B8E9F8B6 /* PocketAgent-Swift-Cxx-Bridge.hpp */,
-				9E614ADE77D5E30405901F82 /* HybridX402SignerSpecSwift.hpp */,
-				9481F1C1C5A764552266EEE7 /* PocketAgent-Swift-Cxx-Umbrella.hpp */,
-			);
-			name = NitroGenerated;
-			sourceTree = "<absolute>";
 		};
 /* End PBXGroup section */
 
@@ -310,19 +247,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				761780ED2CA45674006654EE /* AppDelegate.swift in Sources */,
-				7B312794FF5A5BC1DF86161B /* SoftKeySigner.swift in Sources */,
-				BA398D5849A24E54E6302CDC /* SecureEnclaveSigner.swift in Sources */,
-				79B8F04F478FA9A21A808242 /* KeychainStore.swift in Sources */,
-				7BCFB713C9E4618EDAB51E75 /* Support.swift in Sources */,
-				E253975517F67540E9A23DE8 /* SecureSigner.swift in Sources */,
-				FD5053B7F759D486666B0C56 /* HybridX402Signer.swift in Sources */,
-				47410E6F933D0C5267C7C874 /* HybridX402SignerSpec.cpp in Sources */,
-				6027908C90D107F4B193576A /* HybridX402SignerSpec_cxx.swift in Sources */,
-				07993F97E440010334C5ACD6 /* HybridX402SignerSpec.swift in Sources */,
-				5F14B59F7161BF74E0D845B7 /* PocketAgentAutolinking.swift in Sources */,
-				95353B7405DD9B278F312894 /* PocketAgentAutolinking.mm in Sources */,
-				0D4990B709DCBB75C3142A88 /* HybridX402SignerSpecSwift.cpp in Sources */,
-				090C7B00709F6890F87AB3F1 /* PocketAgent-Swift-Cxx-Bridge.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,15 +258,9 @@
 			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-PocketAgent.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/hugh/x402/react-native-x402/apps/pocket-agent/nitrogen/generated/shared/c++",
-					"/Users/hugh/x402/react-native-x402/apps/pocket-agent/nitrogen/generated/ios",
-				);
 				INFOPLIST_FILE = PocketAgent/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -358,7 +276,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = dev.allowkit.pocketagent;
 				PRODUCT_NAME = PocketAgent;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -371,14 +288,8 @@
 			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-PocketAgent.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/hugh/x402/react-native-x402/apps/pocket-agent/nitrogen/generated/shared/c++",
-					"/Users/hugh/x402/react-native-x402/apps/pocket-agent/nitrogen/generated/ios",
-				);
 				INFOPLIST_FILE = PocketAgent/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -394,7 +305,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = dev.allowkit.pocketagent;
 				PRODUCT_NAME = PocketAgent;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";

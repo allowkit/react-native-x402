@@ -11,6 +11,10 @@ const config = {
       path.resolve(__dirname, 'node_modules'),
       path.resolve(monorepoRoot, 'node_modules'),
     ],
+    // Node builtins used by @x402/* — shimmed for Hermes.
+    extraNodeModules: {
+      crypto: path.resolve(__dirname, 'shims/crypto.js'),
+    },
   },
 };
 

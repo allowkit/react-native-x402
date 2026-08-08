@@ -10,14 +10,14 @@
 #include "HybridX402SignerSpec.hpp"
 
 // Forward declaration of `HybridX402SignerSpec_cxx` to properly resolve imports.
-namespace PocketAgent { class HybridX402SignerSpec_cxx; }
+namespace X402SignerModule { class HybridX402SignerSpec_cxx; }
 
 
 
 #include <string>
 #include <optional>
 
-#include "PocketAgent-Swift-Cxx-Umbrella.hpp"
+#include "X402SignerModule-Swift-Cxx-Umbrella.hpp"
 
 namespace margelo::nitro::x402signer {
 
@@ -34,13 +34,13 @@ namespace margelo::nitro::x402signer {
   class HybridX402SignerSpecSwift: public virtual HybridX402SignerSpec {
   public:
     // Constructor from a Swift instance
-    explicit HybridX402SignerSpecSwift(const PocketAgent::HybridX402SignerSpec_cxx& swiftPart):
+    explicit HybridX402SignerSpecSwift(const X402SignerModule::HybridX402SignerSpec_cxx& swiftPart):
       HybridObject(HybridX402SignerSpec::TAG),
       _swiftPart(swiftPart) { }
 
   public:
     // Get the Swift part
-    inline PocketAgent::HybridX402SignerSpec_cxx& getSwiftPart() noexcept {
+    inline X402SignerModule::HybridX402SignerSpec_cxx& getSwiftPart() noexcept {
       return _swiftPart;
     }
 
@@ -139,7 +139,7 @@ namespace margelo::nitro::x402signer {
     }
 
   private:
-    PocketAgent::HybridX402SignerSpec_cxx _swiftPart;
+    X402SignerModule::HybridX402SignerSpec_cxx _swiftPart;
   };
 
 } // namespace margelo::nitro::x402signer

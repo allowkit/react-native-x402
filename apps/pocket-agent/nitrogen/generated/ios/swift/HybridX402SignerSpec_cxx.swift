@@ -19,7 +19,7 @@ import NitroModules
 open class HybridX402SignerSpec_cxx {
   /**
    * The Swift <> C++ bridge's namespace (`margelo::nitro::x402signer::bridge::swift`)
-   * from `PocketAgent-Swift-Cxx-Bridge.hpp`.
+   * from `X402SignerModule-Swift-Cxx-Bridge.hpp`.
    * This contains specialized C++ templates, and C++ helper functions that can be accessed from Swift.
    */
   public typealias bridge = margelo.nitro.x402signer.bridge.swift
